@@ -23,6 +23,14 @@
 
 "use strict";
 
+// for (let li of document.querySelectorAll("li")) {
+//   let title = li.firstChild.data;
+//   // console.log(title);
+//   title = title.trim();
+//   let count = li.getElementsByTagName("li").length;
+//   console.log(title + ": " + count);
+// }
+
 const numberOfFilms = +prompt("Сколько фильмов вы посмотрели?", "");
 
 const personalMovieDB = {
