@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /install
+/Project_6/Food/node modules
 
 # testing
 /coverage
