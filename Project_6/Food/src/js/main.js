@@ -46,7 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // TIMER
 
-  const deadline = "2020-09-20";
+  const deadline = "2020-09-22";
 
   function getTimeRemaining(endtime) {
     // кол-во мсек которое будет в нашем конечном времени
@@ -98,4 +98,45 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   setClock(".timer", deadline);
+
+  // modal
+
+  const modalTrigger = document.querySelectorAll("[data-modal]"),
+    modal = document.querySelector(".modal"),
+    modalCloseBtn = document.querySelector("[data-close]");
+
+  //example
+  modalTrigger.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      modal.classList.add("show", "fade");
+      modal.classList.remove("hide");
+      // Либо вариант с toggle - но тогда назначить класс в верстке
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  function closeModal() {
+    modal.classList.add("hide");
+    modal.classList.remove("show", "fade");
+    // страничка шевелится
+    document.body.style.overflow = "";
+    // modal.classList.toggle("show");
+  }
+
+  modalCloseBtn.addEventListener("click", closeModal);
+
+  // закрыть окно
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // закрыть окно с помощью escape
+
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Escape" && modal.classList.contains("show")) {
+      closeModal();
+    }
+  });
 });
