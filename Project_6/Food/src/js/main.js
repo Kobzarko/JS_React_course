@@ -46,7 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // TIMER
 
-  const deadline = "2020-09-22";
+  const deadline = "2020-09-25";
 
   function getTimeRemaining(endtime) {
     // кол-во мсек которое будет в нашем конечном времени
@@ -93,6 +93,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (t.total <= 0) {
         clearInterval(timeInterval);
+        // или нули
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";
+        days.textContent = "00";
+        // или убираем полностью со страницы
+        // document.querySelector(".promotion__timer").style.display = "none";
       }
     }
   }
@@ -107,13 +114,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //example
   modalTrigger.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      modal.classList.add("show", "fade");
-      modal.classList.remove("hide");
-      // Либо вариант с toggle - но тогда назначить класс в верстке
-      document.body.style.overflow = "hidden";
-    });
+    btn.addEventListener("click", openModal);
   });
+
+  // открыть модальное окно
+  function openModal() {
+    // добавить класс
+    modal.classList.add("show", "fade");
+    // убрать класс
+    modal.classList.remove("hide");
+    // Либо вариант с toggle - но тогда назначить класс в верстке
+    document.body.style.overflow = "hidden";
+  }
 
   function closeModal() {
     modal.classList.add("hide");
@@ -139,4 +151,6 @@ window.addEventListener("DOMContentLoaded", () => {
       closeModal();
     }
   });
+
+  // Модификация модального окна
 });
