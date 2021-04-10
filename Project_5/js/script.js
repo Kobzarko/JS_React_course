@@ -18,6 +18,8 @@
 // Для получения доступа к значению input - обращаемся к нему как input.value;
 // P.S. Здесь есть несколько вариантов решения задачи, принимается любой, но рабочий.
 
+
+
 // 7) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
 
 // 8) При клике на мусорную корзину - элемент будет удаляться из списка (сложно)
@@ -40,6 +42,50 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   };
 
+//   const promoAdv = document.querySelectorAll('.promo__adv img'),
+//       promoBg = document.querySelector('.promo__bg'),
+//       promoGenre = promoBg.querySelector('.promo__genre'),
+//       promoInteractiveList = document.querySelector('.promo__interactive-list'),
+//       addForm = document.querySelector("form.add"),
+//       addInput = addForm.querySelector('.adding__input'),
+//       addBtn = addForm.lastElementChild;
+   
+  
+
+// // 1 Удалить все рекламные блоки
+//   let removeAdv = promoAdv.forEach(item =>{
+//     item.remove();
+//   });
+
+// // 2) Изменить жанр фильма, поменять "комедия" на "драма"
+//   promoGenre.textContent = 'драма';
+
+// // 3) Изменить задний фон постера
+//   promoBg.style.backgroundImage = 'url("img/bg.jpg")';
+// // 4) Список фильмов на странице сформировать на основании данных из этого JS файла.
+//   const sortArr = (arr) => {
+//     arr.sort();
+//   };
+
+// // promoInteractiveList.forEach(item => {
+// //    item.innerHTML = '';
+// //    sortArr(movieDB.movies);
+// //    item.innerHTML += `<li class="promo__interactive-item">${++item} 
+// //    ${movieDB.movies} <div class="delete"></div></li>`;
+// //   });
+// promoInteractiveList.innerHTML = '';
+// movieDB.movies.forEach((film, index)=>{
+//   promoInteractiveList.innerHTML += `<li class="promo__interactive-item">
+//   ${++index} ${film}<div class="delete"></div></li>`;
+// });
+
+
+
+// addForm.addEventListener('submit', (event)=>{
+//   event.preventDefault();
+
+// });
+
   const adv = document.querySelectorAll(".promo__adv img"),
     poster = document.querySelector(".promo__bg"),
     genre = poster.querySelector(".promo__genre"),
@@ -49,6 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
     checkbox = addForm.querySelector('[type="checkbox"]');
 
   // 1 Удалить все рекламные блоки
+
+  // adv.remove() не получится потому что это псевдомассив
   const deleteAdv = (arr) => {
     arr.forEach((item) => {
       item.remove();
@@ -68,6 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //4 сортируем по алфавиту наши фильмы
   const sortArr = (arr) => {
+
+    for(let item of arr){
+      item.toLowerCase();
+    }
     arr.sort();
   };
 
@@ -92,13 +144,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const deleteElem = document.querySelectorAll(".delete");
 
     deleteElem.forEach((item, i) => {
-      item.addEventListener("click", () => {
-        // удаляем элем из списка
+      item.addEventListener('click', ()=>{
         item.parentElement.remove();
-        // удаляем из нашей бд
+        // удалить из объекта 
         movieDB.movies.splice(i, 1);
-        // восстанавливаем нумерацию
-        createMovieList(films, parent);
+        createMovieList(movieDB.movies, movieList);
       });
     });
   }
@@ -115,32 +165,55 @@ document.addEventListener("DOMContentLoaded", () => {
   // 6) Реализовать функционал, чтобы после заполнения формы и нажатия кнопки "Подтвердить" -
   // новый фильм добавляется в список.
 
-  addForm.addEventListener("submit", (event) => {
-    // страничка не будет перегружаться отменяем стандартное поведение
-    event.preventDefault();
-    // данные из инпута
-    let newFilm = addInput.value;
-    // галочка
-    const favorite = checkbox.checked;
-
-    if (newFilm) {
-      // 7) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
-      if (newFilm.length > 22) {
-        newFilm = `${newFilm.substring(0, 21)}...`;
-      }
-      // добавляем в наш массив новый фильм
-      movieDB.movies.push(newFilm);
-      // сортируем по алфавиту наши фильмы
-      sortArr(movieDB.movies);
-      // чистим окно ввода
-      event.target.reset();
-
-      if (favorite) {
-        console.log("Добавляем любимый фильм");
-      }
-      // добавляем в список
-      createMovieList(movieDB.movies, movieList);
-      console.log(movieDB.movies);
+addForm.addEventListener('submit', (event)=>{
+  event.preventDefault();
+  console.log(event.target);
+  let newFilm = addInput.value;
+  const films = movieDB.movies;
+  const favorite = checkbox.checked;
+  if(newFilm){
+    if(newFilm.length > 21){
+      //сокращаем названия substring режет строку
+      newFilm = `${newFilm.substring(0, 22)}...`;
     }
-  });
+    if(favorite){
+      console.log(`${newFilm} - Добавляем любимый фильм`);
+    }
+    films.push(newFilm);
+    console.log(films);
+  }
+  sortArr(films);
+  createMovieList(films, movieList);
+  event.target.reset();
+});
+
+
+  // addForm.addEventListener("submit", (event) => {
+  //   // страничка не будет перегружаться отменяем стандартное поведение
+  //   event.preventDefault();
+  //   // данные из инпута
+  //   let newFilm = addInput.value;
+  //   // галочка
+  //   const favorite = checkbox.checked;
+  //   // если непустая строка то тру
+  //   if (newFilm) {
+  //     // 7) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
+  //     if (newFilm.length > 22) {
+  //       newFilm = `${newFilm.substring(0, 21)}...`;
+  //     }
+  //     // добавляем в наш массив новый фильм
+  //     movieDB.movies.push(newFilm);
+  //     // сортируем по алфавиту наши фильмы
+  //     sortArr(movieDB.movies);
+  //     // чистим окно ввода
+  //     event.target.reset();
+
+  //     if (favorite) {
+  //       console.log("Добавляем любимый фильм");
+  //     }
+  //     // добавляем в список
+  //     createMovieList(movieDB.movies, movieList);
+  //     console.log(movieDB.movies);
+  //   }
+  // });
 });

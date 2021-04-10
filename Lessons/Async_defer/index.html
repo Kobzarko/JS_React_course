@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async_defer</title>
+</head>
+<body>
+    <!-- defer сработает после загрузки всей страницы , но раньше  чем DOMContentLoaded -->
+    <!-- <script defer src="async_defer.js"></script> -->
+    <!-- соблюдает порядок выполнения скриптов -->
+    <!-- <script defer src="test.js"></script> -->
+    <p>Hello World</p>
+    <p>Second message</p>
+    <!-- async не ждет никого-->
+    <script async src="async_defer.js"></script>
+    <!-- не соблюдает порядок выполнения скриптов -->
+    <script async src="test.js"></script>
+
+</body>
+</html>
