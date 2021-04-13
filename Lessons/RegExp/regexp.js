@@ -1,11 +1,12 @@
 "use strict";
 
-const ans = prompt("Enter your name");
-
-const reg = /n/gi;
+// когда нужно создать регулярку на лету
+// regexp = new RegExp('pattern', 'flags');
 
 // Регулярные выражения могут иметь флаги, которые влияют на поиск.
 
+// regexp = /шаблон/; // без флагов
+// regexp = /шаблон/gmi; // с флагами gmi (будут описаны далее)
 // В JavaScript их всего шесть:
 
 // i
@@ -21,5 +22,54 @@ const reg = /n/gi;
 // y
 // Режим поиска на конкретной позиции в тексте (описан в главе Поиск на заданной позиции, флаг "y")
 
+// const ans = prompt("Enter your name");
+
+// /pattern/flag
+const reg = /n/gi;
+
+// метод search() ищем все 'n' только первое совпадение влаг g не работает
 // console.log(ans.search(reg));
-console.log(ans.match(reg));
+
+// метод match возвращает массив со свойствами
+// console.log(ans.match(reg));
+
+const pass = prompt("Enter your pass");
+
+// метод replace меняет одни символы на другие /./ любой символ
+// вернет звездочки
+// console.log(pass.replace(/./g, "*"));
+// //поменяет только . точки
+// // \-экранирование
+// console.log(pass.replace(/\./g, "*"));
+
+// console.log("12-34-56".replace(/-/g, ":"));
+
+// test вернет true или false если есть вопадения или нет
+// console.log(reg.test(pass));
+
+// Классы
+
+// \d цифра
+// \w символы буквы некириллица
+// \s пробел табуляция \t перевод строки \n
+
+const digit = /\d/g;
+// вернет только цифры
+console.log(pass.match(digit));
+
+// конкретный вариант
+const text = "My name is R2D2";
+const regexp = /\w\d\w\d/i;
+console.log(text.match(regexp));
+
+// Обратные классы
+
+// \D не цифра
+
+// \W не буква не латинница не знак подчеркивания и не цифра
+
+// \S не пробел любой символ но не пробел, даже буква
+
+let str = "+7(903)-123-45-67";
+
+console.log(str.replace(/\D/gi, "")); // 79031234567
